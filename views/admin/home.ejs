@@ -1,0 +1,45 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/list.css">
+    <link rel="stylesheet" href="/css/main.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+        <main>
+
+            <div class="header">
+                <h2>Responsables de maintenance</h2>
+
+                <form action="/admin/add-responsable/" method="GET">
+                    <button class="btn">
+                        Ajouter un responsable
+                    </button>
+                </form>
+            </div>
+
+            <% if (responsables.length > 0) { %>
+                <div class="list-container">
+                    <% for (let responsable of responsables) { %>
+                        <article class="card">
+                            <div class="info-item">
+                                <label for="nom" class="label-item">Nom</label>
+                                <label for="placeholder-nom" class="info-placeholder"><%= responsable.nom %></label>
+                            </div>
+                            <div class="info-item">
+                                <label for="prenom" class="label-item">Prénom</label>
+                                <label for="placeholder-prenom" class="info-placeholder"><%= responsable.prenom %></label>
+                            </div>
+                            <form action="/admin" method="POST">
+                                <input type="hidden" name="responsableId" value="<%= responsable.uid %>">
+                                <button class="btn" type="submit">
+                                    Supprimer
+                                </button>
+                            </form>
+                        </article>
+                    <% } %>
+                </div>
+            <% } else { %>
+                <h4>Pas de responsables de maintenances...</h4>
+            <% } %>
+        </main>

@@ -1,0 +1,37 @@
+<div class="backdrop"></div>
+<header class="main-header">
+    <button id="side-menu-toggle">Menu</button>
+    <nav class="main-header__nav">
+        <ul class="main-header__item-list">
+            <li class="main-header__item">
+                <a class="<%= path === '/admin' ? 'active' : '' %>" href="/admin">Admin</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/responsable' ? 'active' : '' %>" href="/responsable">Responsable Maintenance</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/admin/add-responsable' ? 'active' : '' %>" href="/admin/add-responsable">Ajouter un responsable</a>
+            </li>
+            <li class="main-header__item">
+                <a class="<%= path === '/responsable/add-ressource' ? 'active' : '' %>" href="/responsable/add-ressource">Ajouter une ressource</a>
+            </li>
+        </ul>
+    </nav>
+</header>
+
+<nav class="mobile-nav">
+    <ul class="mobile-nav__item-list">
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/admin' ? 'active' : '' %>" href="/admin">Admin</a>
+        </li>
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/responsable' ? 'active' : '' %>" href="/responsable">Responsable Maintenance</a>
+        </li>
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/admin/add-responsable' ? 'active' : '' %>" href="/admin/add-responsable">Ajouter un responsable</a>
+        </li>
+        <li class="mobile-nav__item">
+            <a class="<%= path === '/responsable/add-ressource' ? 'active' : '' %>" href="/responsable/add-ressource">Ajouter une ressource</a>
+        </li>
+    </ul>
+</nav>

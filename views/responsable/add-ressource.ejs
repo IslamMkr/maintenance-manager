@@ -1,0 +1,22 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/forms.css">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+   <%- include('../includes/navigation.ejs') %>
+
+    <main>
+        <form class="product-form" action="/responsable/add-ressource" method="POST">
+            <div class="form-control">
+                <label for="nomRessource">Nom de la ressource</label>
+                <input type="text" name="nomRessource" id="nomRessource">
+            </div>
+            <div class="form-control">
+                <label for="localisation">Localisation</label>
+                <input type="text" name="localisation" id="localisation">
+            </div>
+
+            <button class="btn" type="submit">Ajouter</button>
+        </form>
+    </main>

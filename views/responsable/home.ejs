@@ -1,0 +1,47 @@
+<%- include('../includes/head.ejs') %>
+    <link rel="stylesheet" href="/css/list.css">
+    <link rel="stylesheet" href="/css/main.css">
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+
+        <main>
+            <div class="header">
+                <h2>Ressources</h2>
+
+                <form action="/responsable/add-ressource" method="GET">
+                    <button class="btn">
+                        Ajouter une ressource
+                    </button>
+                </form>
+            </div>
+
+            <% if (ressources.length > 0) { %>
+                <div class="list-container">
+                    <% for (let ressource of ressources) { %>
+                        <article class="card">
+                            <div class="info-item">
+                                <label for="description" class="label-item">Description</label>
+                                <label for="placeholder-description" class="info-placeholder"><%= ressource.description %></label>
+                            </div>
+                            <div class="info-item">
+                                <label for="localisation" class="label-item">Localisation</label>
+                                <label for="placeholder-localisation" class="info-placeholder"><%= ressource.localisation %></label>
+                            </div>
+                            <div class="buttons-container">
+                                <a href="/responsable/ressource-detail" class="btn">Détails</a>
+                                <form action="/responsable" method="POST">    
+                                    <input type="hidden" name="ressourceId" value="<%= ressource.rid %>">
+                                    
+                                    <button class="btn" type="submit">
+                                        Supprimer
+                                    </button>
+                                </form>
+                            </div>
+                        </article>
+                    <% } %>
+                </div>
+            <% } else { %>
+                <h4>Pas de ressources...</h4>
+            <% } %>

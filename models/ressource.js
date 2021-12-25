@@ -36,4 +36,11 @@ module.exports = class Ressource {
     static fetchAll(cb) {
         getResFromFile(cb)
     }
+
+    static findById(id, cb) {
+        getResFromFile(ressources => {
+            const ressource = ressources.find(res => res.rid == id)
+            cb(ressource)
+        })
+    }
 }

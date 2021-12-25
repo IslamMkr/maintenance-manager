@@ -10,4 +10,6 @@ router.get('/responsable/add-ressource', responsableController.getAddRessource)
 
 router.post("/responsable/add-ressource", responsableController.postAddRessource)
 
+router.post('/responsable/ressource-detail', responsableController.postRessourceDetail)
+
 module.exports = router

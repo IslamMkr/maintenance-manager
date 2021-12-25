@@ -30,7 +30,13 @@
                                 <label for="placeholder-localisation" class="info-placeholder"><%= ressource.localisation %></label>
                             </div>
                             <div class="buttons-container">
-                                <a href="/responsable/ressource-detail" class="btn">Détails</a>
+                                <form action="/responsable/ressource-detail" method="POST">
+                                    <input type="hidden" name="ressourceId" value="<%= ressource.rid %>">
+                                    
+                                    <button class="btn" type="submit">
+                                        Détails
+                                    </button>
+                                </form>
                                 <form action="/responsable" method="POST">    
                                     <input type="hidden" name="ressourceId" value="<%= ressource.rid %>">
                                     

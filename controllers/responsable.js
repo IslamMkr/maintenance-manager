@@ -37,3 +37,18 @@ exports.postAddRessource = (req, res) => {
 
     res.redirect('/responsable')
 }
+
+exports.postRessourceDetail = (req, res) => {
+    const rid = req.body.ressourceId
+
+    Ressource.findById(rid, ressource => {
+        const pageData = {
+            pageTitle: ressource.description,
+            path: '/responsable/ressource-detail',
+            ressource: ressource
+        }
+        console.log(ressource)
+
+        res.render('responsable/ressource-detail', pageData)
+    })
+}

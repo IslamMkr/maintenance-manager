@@ -39,6 +39,18 @@ exports.postAddRessource = (req, res) => {
     res.redirect('/responsable')
 }
 
+exports.postRessourceDelete = (req, res) => {
+    const rid = req.body.ressourceId
+
+    // Deleting ressource anomalies
+    Anomalie.deleteByRid(rid)
+    
+    // Deleting the ressource
+    Ressource.deleteByRid(rid)
+
+    res.redirect('/responsable')
+}
+
 exports.postRessourceDetail = (req, res) => {
     const rid = req.body.ressourceId
 
@@ -50,7 +62,7 @@ exports.postRessourceDetail = (req, res) => {
                 ressource: ressource,
                 anomalies: anomalies
             }
-    
+
             res.render('responsable/ressource-detail', pageData)
         })
     })

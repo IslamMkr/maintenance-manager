@@ -213,6 +213,10 @@ form {
   border-color: white;
 }
 
+.btn-fix:hover {
+  content: "Fixer";
+}
+
 @media (min-width: 768px) {
   .main-header__nav {
     display: flex;

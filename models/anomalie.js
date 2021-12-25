@@ -24,9 +24,27 @@ module.exports = class Anomalie {
     save() {
         this.aid = Math.random().toString()
 
+        // TODO: Fix date to DD/MM/YYYY format
+        // const options = { 
+        //     year: 'numeric', 
+        //     month: 'long', 
+        //     day: 'numeric' 
+        // }
+        // this.date = Date.now().toLocaleDateString(undefined, options)
+
         getAnomaliesFromFile(anomalies => {
             anomalies.push(this)
             fs.writeFile(pathToAnomaliesFile, JSON.stringify(anomalies), err => {
+                console.log(err)
+            })
+        })
+    }
+
+    static deleteByRid(rid) {
+        getAnomaliesFromFile(anomalies => {
+            // Filter : get all anomalies except the ones that have the rid passed in params
+            const anoms = anomalies.filter(anom => anom.rid != rid)
+            fs.writeFile(pathToAnomaliesFile, JSON.stringify(anoms), err => {
                 console.log(err)
             })
         })

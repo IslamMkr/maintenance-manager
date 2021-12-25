@@ -33,6 +33,15 @@ module.exports = class Ressource {
         })
     }
 
+    static deleteByRid(rid) {
+        getResFromFile(res => {
+            const ressources = res.filter(ressource => ressource.rid != rid)
+            fs.writeFile(pathToResFile, JSON.stringify(ressources), err => {
+                console.log(err)
+            })
+        })
+    }
+
     static fetchAll(cb) {
         getResFromFile(cb)
     }

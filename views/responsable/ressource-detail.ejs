@@ -6,4 +6,33 @@
     <body>
         <%- include('../includes/navigation.ejs') %>
 
-    <h1><%= ressource.description %></h1>
+    <main>
+        <h1><%= ressource.description %></h1>
+        <p>Localisation : <b><%= ressource.localisation %></b></p>
+        <hr>
+
+        <h3>Historique d'anomalies</h3>
+
+        <% if (anomalies.length > 0) { %>
+            <div class="list-container">
+                <% for (let anomalie of anomalies) { %>
+                    <article class="card">
+                        <div class="info-item">
+                            <label for="description" class="label-item">Anomalie</label>
+                            <label for="placeholder-description" class="info-placeholder"><%= anomalie.description %></label>
+                        </div>
+                        <div class="info-item">
+                            <label for="date" class="label-item">Date du rapport</label>
+                            <label for="placeholder-date" class="info-placeholder"><%= anomalie.date %></label>
+                        </div>
+                        <div class="info-item">
+                            <label for="date" class="label-item">Statut</label>
+                            <button class="btn <%= anomalie.statut === 'Fixée' ? 'btn-fixed' : 'btn-fix' %>"><%= anomalie.statut === 'Fixée' ? 'Fixée' : 'Non-Fixée' %></button>
+                        </div>
+                    </article>
+                <% } %>
+            </div>
+        <% } else { %>
+            <h4>Pas de d'historique d'anomalies pour cette ressource...</h4>
+        <% } %>
+    </main>

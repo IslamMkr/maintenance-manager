@@ -202,6 +202,17 @@ form {
   color: white;
 }
 
+.btn-fixed {
+  color: white;
+  background: #00695c;
+}
+
+.btn-fixed:hover {
+  background-color: #b30606;
+  color: white;
+  border-color: white;
+}
+
 @media (min-width: 768px) {
   .main-header__nav {
     display: flex;

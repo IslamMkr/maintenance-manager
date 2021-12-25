@@ -1,3 +1,4 @@
+const Anomalie = require("../models/anomalie")
 const Ressource = require("../models/Ressource")
 
 exports.getResponsableHome = (req, res) => {
@@ -42,13 +43,15 @@ exports.postRessourceDetail = (req, res) => {
     const rid = req.body.ressourceId
 
     Ressource.findById(rid, ressource => {
-        const pageData = {
-            pageTitle: ressource.description,
-            path: '/responsable/ressource-detail',
-            ressource: ressource
-        }
-        console.log(ressource)
-
-        res.render('responsable/ressource-detail', pageData)
+        Anomalie.findByRid(rid, anomalies => {
+            const pageData = {
+                pageTitle: ressource.description,
+                path: '/responsable/ressource-detail',
+                ressource: ressource,
+                anomalies: anomalies
+            }
+    
+            res.render('responsable/ressource-detail', pageData)
+        })
     })
 }

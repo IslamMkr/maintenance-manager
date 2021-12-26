@@ -37,4 +37,16 @@ module.exports = class Utilisateur {
     static fetchAll(cb) {
         getUsersFromFile(cb)
     }
+
+    static connect(nom, password, cb) {
+        getUsersFromFile(users => {
+            const user = users.find(u => u.nom == nom && u.password == password)
+
+            if (user) {
+                cb(user)
+            } else {
+                cb(undefined)
+            }
+        })
+    }
 }

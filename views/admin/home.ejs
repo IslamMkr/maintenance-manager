@@ -4,9 +4,8 @@
     </head>
 
     <body>
-        <%- include('../includes/navigation.ejs') %>
-
         <main>
+            <%- include('../includes/header.ejs') %>
 
             <div class="header">
                 <h2>Responsables de maintenance</h2>
@@ -24,11 +23,11 @@
                         <article class="card">
                             <div class="info-item">
                                 <label for="nom" class="label-item">Nom</label>
-                                <label for="placeholder-nom" class="info-placeholder"><%= responsable.nom %></label>
+                                <label for="placeholder-nom" class="info-placeholder"><%= responsable.f_name %></label>
                             </div>
                             <div class="info-item">
                                 <label for="prenom" class="label-item">Prénom</label>
-                                <label for="placeholder-prenom" class="info-placeholder"><%= responsable.prenom %></label>
+                                <label for="placeholder-prenom" class="info-placeholder"><%= responsable.l_name %></label>
                             </div>
                             <div class="info-item">
                                 <label for="password" class="label-item">Mot de passe</label>

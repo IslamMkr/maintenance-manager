@@ -5,13 +5,15 @@
 
     <body>
         <main>   
+            <%- include('./includes/header.ejs') %>
+
             <form class="product-form" action="/" method="POST">
                 <h1>Connexion</h1>
                 <hr>
                 
                 <div class="form-control">
-                    <label for="nom">Nom</label>
-                    <input type="text" name="nom" id="nom">
+                    <label for="username">Nom d'utilisateur</label>
+                    <input type="text" name="username" id="username">
                 </div>
                 <div class="form-control">
                     <label for="password">Mot de passe</label>

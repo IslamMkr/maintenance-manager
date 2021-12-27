@@ -1,19 +1,4 @@
-const fs = require('fs')
-const path = require('path')
-
-const rootDir = require('../util/path')
-
-const pathToUsersFile = path.join(rootDir, 'data/users.json')
-
-const getUsersFromFile = cb => {
-    fs.readFile(pathToUsersFile, (err, data) => {
-        if (err) {
-            cb([])
-        } else {
-            cb(JSON.parse(data))
-        }
-    })
-}
+const db = require('../util/database')
 
 module.exports = class Utilisateur {
     constructor(nom, prenom, role, password) {
@@ -21,39 +6,23 @@ module.exports = class Utilisateur {
         this.prenom = prenom
         this.role = role
         this.password = password
+        this.username = this.nom.replace(' ', '').toLowerCase() + '.' + this.prenom.replace(' ', '').toLowerCase()
     }
 
     save() {
-        this.uid = Math.random().toString()
-        
-        getUsersFromFile(users => {
-            users.push(this)
-            fs.writeFile(pathToUsersFile, JSON.stringify(users), err => {
-                console.log(err)
-            })
-        })
+        const query = `INSERT INTO users (f_name, l_name, username, user_role, password) VALUES (?, ?, ?, ?, ?);`
+        return db.execute(query, [this.nom, this.prenom, this.username, this.role, this.password])
     }
 
-    static fetchAllResponsable(cb) {
-        getUsersFromFile(users => {
-            const responsables = users.filter(user => user.role === 'RM')
-            if (responsables) {
-                cb(responsables)
-            } else {
-                cb([])
-            }
-        })
+    static fetchAllResponsable() {
+        return db.execute(`SELECT * FROM users WHERE user_role = 'RM';`)
     }
 
-    static connect(nom, password, cb) {
-        getUsersFromFile(users => {
-            const user = users.find(u => u.nom == nom && u.password == password)
+    static connect(username, password) {
+        return db.execute(`SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`)
+    }
 
-            if (user) {
-                cb(user)
-            } else {
-                cb(undefined)
-            }
-        })
+    static deleteByUid(uid) {
+        return db.execute(`DELETE FROM users WHERE uid = ${uid};`)
     }
 }

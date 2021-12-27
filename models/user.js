@@ -2,38 +2,40 @@ const DataTypes = require('sequelize')
 
 const sequelize = require('../util/database')
 
-const Anomalie = sequelize.define(
-    'anomalie',
+const User = sequelize.define(
+    'user',
     {
-        aid: {
+        uid: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             allowNull: false,
             autoIncrement: true,
             unique: true
         },
-        rid: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: 'resources',
-                key: 'rid'
-            }
-        },
-        description: {
+        firstName: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        anomalieStatus: {
+        lastName: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        userName: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        userRole: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                isIn: [['F', 'N']]
+                isIn: [['AD', 'RM']]
             }
+        },
+        password: {
+            type: DataTypes.STRING,
+            allowNull: false
         }
     }
 )
 
-Anomalie.sync({ force:true })
-
-module.exports = Anomalie
+module.exports = User

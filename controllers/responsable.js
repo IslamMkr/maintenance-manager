@@ -1,23 +1,25 @@
 const Anomalie = require("../models/anomalie")
-const Ressource = require("../models/Ressource")
+const Resource = require("../models/resource")
 
 exports.getResponsableHome = (req, res) => {
     const responsableId = req.params.responsableId
 
-    Ressource.fetchAll()
-        .then(([ressources, fieldData]) => {
-            const pageData = {
-                pageTitle: 'Home',
-                path: '/responsable', 
-                ressources: ressources, 
-                responsableId: responsableId
-            }
-            
-            res.render('responsable/home', pageData)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+    Resource.findAll({
+        where: {
+            uid: responsableId
+        }
+    }).then(resources => {
+        const pageData = {
+            pageTitle: 'Home',
+            path: '/responsable', 
+            ressources: resources, 
+            responsableId: responsableId
+        }
+        
+        res.render('responsable/home', pageData)
+    }).catch(err => {
+        console.log(err)
+    })
 }
 
 exports.getAddRessource = (req, res) => {
@@ -35,11 +37,16 @@ exports.getAddRessource = (req, res) => {
 exports.postAddRessource = (req, res) => {
     const responsableId = req.params.responsableId
 
-    const desc = req.body.nomRessource
+    const description = req.body.nomRessource
     const localisation = req.body.localisation
-    const ressource = new Ressource(responsableId, desc, localisation)
 
-    ressource.save()
+    const resourceObject = {
+        uid: responsableId,
+        resourceName: description,
+        localisation: localisation
+    }
+
+    Resource.create(resourceObject)
         .then(() => {
             res.redirect(`/${responsableId}`)
         })
@@ -53,38 +60,49 @@ exports.postRessourceDelete = (req, res) => {
     const rid = req.params.ressourceId
 
     // Deleting ressource anomalies
-    Anomalie.deleteByRid(rid)
-        .then(() => {
-            // Deleting the ressource
-            Ressource.deleteByRid(rid)
-                .then(() => {
-                    res.redirect(`/${responsableId}`)
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-        })
-        .catch(err => {
+    Anomalie.destroy({
+        where: {
+            rid: rid
+        }
+    }).then(() => {
+        // Deleting the ressource
+        Resource.destroy({
+            where: {
+                rid: rid
+            }
+        }).then(() => {
+            res.redirect(`/${responsableId}`)
+        }).catch(err => {
             console.log(err)
         })
+    }).catch(err => {
+        console.log(err)
+    })
 }
 
 exports.postRessourceDetail = (req, res) => {
     //const responsableId = req.params.responsableId
     const rid = req.params.ressourceId
+
+    Resource.findByPk(rid)
+        .then(resource => {
+            Anomalie.findAll({
+                where: {
+                    rid: rid
+                }
+            }).then(anomalies => {
+                const pageData = {
+                    pageTitle: resource.resName,
+                    path: `/responsable/ressource-detail`,
+                    ressource: resource,
+                    anomalies: anomalies
+                }
     
-    Ressource.findByRid(rid)
-        .then(([ressources, fieldData]) => {
-            Anomalie.findByRid(rid)
-                .then(([anomalies, fieldData]) => {
-                    const pageData = {
-                        pageTitle: ressources[0].res_name,
-                        path: `/responsable/ressource-detail`,
-                        ressource: ressources[0],
-                        anomalies: anomalies
-                    }
-        
-                    res.render('responsable/ressource-detail', pageData)
-                })
+                res.render('responsable/ressource-detail', pageData)
+            }).catch(err => {
+                console.log(err)
+            }) 
+        }).catch(err => {
+            console.log(err)
         })
 }

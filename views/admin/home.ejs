@@ -30,6 +30,10 @@
                                 <label for="prenom" class="label-item">Prénom</label>
                                 <label for="placeholder-prenom" class="info-placeholder"><%= responsable.prenom %></label>
                             </div>
+                            <div class="info-item">
+                                <label for="password" class="label-item">Mot de passe</label>
+                                <label for="placeholder-password" class="info-placeholder"><%= responsable.password %></label>
+                            </div>
                             <form action="/admin" method="POST">
                                 <input type="hidden" name="responsableId" value="<%= responsable.uid %>">
                                 <button class="btn" type="submit">

@@ -1,7 +1,7 @@
 const Utilisateur = require("../models/Utilisateur")
 
 exports.getAdminHome = (req, res) => {
-    Utilisateur.fetchAll(responsables => {
+    Utilisateur.fetchAllResponsable(responsables => {
         const pageData = {
             pageTitle: 'Home',
             path: '/admin',

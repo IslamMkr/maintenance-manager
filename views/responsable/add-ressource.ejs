@@ -7,7 +7,7 @@
    <%- include('../includes/navigation.ejs') %>
 
     <main>
-        <form class="product-form" action="/responsable/add-ressource" method="POST">
+        <form class="product-form" action="/<%= responsableId %>/add-ressource" method="POST">
             <div class="form-control">
                 <label for="nomRessource">Nom de la ressource</label>
                 <input type="text" name="nomRessource" id="nomRessource">

@@ -10,7 +10,7 @@
             <div class="header">
                 <h2>Ressources</h2>
 
-                <form action="/responsable/add-ressource" method="GET">
+                <form action="/<%= responsableId %>/add-ressource" method="GET">
                     <button class="btn">
                         Ajouter une ressource
                     </button>
@@ -30,16 +30,12 @@
                                 <label for="placeholder-localisation" class="info-placeholder"><%= ressource.localisation %></label>
                             </div>
                             <div class="buttons-container">
-                                <form action="/responsable/ressource-detail" method="POST">
-                                    <input type="hidden" name="ressourceId" value="<%= ressource.rid %>">
-                                    
+                                <form action="/<%= responsableId %>/ressources/<%= ressource.rid %>" method="POST">
                                     <button class="btn" type="submit">
                                         Détails
                                     </button>
                                 </form>
-                                <form action="/responsable/ressource-delete" method="POST">    
-                                    <input type="hidden" name="ressourceId" value="<%= ressource.rid %>">
-                                    
+                                <form action="/<%= responsableId %>/ressources/<%= ressource.rid %>/ressource-delete" method="POST">
                                     <button class="btn" type="submit">
                                         Supprimer
                                     </button>

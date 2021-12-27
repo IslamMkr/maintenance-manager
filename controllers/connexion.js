@@ -15,7 +15,7 @@ exports.postConnexion = (req, res) => {
     Utilisateur.connect(nom, password, user => {
         if (user) {
             if (user.role === 'RM') {
-                res.redirect(`/responsable?uid=${user.uid}`)
+                res.redirect(`/${user.uid}`)
             } else {
                 res.redirect('/admin')
             }

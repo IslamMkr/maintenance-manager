@@ -34,8 +34,15 @@ module.exports = class Utilisateur {
         })
     }
 
-    static fetchAll(cb) {
-        getUsersFromFile(cb)
+    static fetchAllResponsable(cb) {
+        getUsersFromFile(users => {
+            const responsables = users.filter(user => user.role === 'RM')
+            if (responsables) {
+                cb(responsables)
+            } else {
+                cb([])
+            }
+        })
     }
 
     static connect(nom, password, cb) {

@@ -1,17 +1,18 @@
 const express = require('express')
 
 const responsableController = require('../controllers/responsable')
+const isAuth = require('../middleware/isAuth')
 
 const router = express.Router()
 
-router.get('/:responsableId', responsableController.getResponsableHome)
+router.get('/:responsableId', isAuth, responsableController.getResponsableHome)
 
-router.get('/:responsableId/add-ressource', responsableController.getAddRessource)
+router.get('/:responsableId/add-ressource', isAuth, responsableController.getAddRessource)
 
-router.post("/:responsableId/add-ressource", responsableController.postAddRessource)
+router.post("/:responsableId/add-ressource", isAuth, responsableController.postAddRessource)
 
-router.post("/:responsableId/ressources/:ressourceId/ressource-delete", responsableController.postRessourceDelete)
+router.post("/:responsableId/ressources/:ressourceId/ressource-delete", isAuth, responsableController.postRessourceDelete)
 
-router.post('/:responsableId/ressources/:ressourceId', responsableController.postRessourceDetail)
+router.post('/:responsableId/ressources/:ressourceId', isAuth, responsableController.postRessourceDetail)
 
 module.exports = router

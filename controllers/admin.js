@@ -1,15 +1,20 @@
+//const bcrypt = require('bcryptjs')
+
 const User = require('../models/user')
 
 exports.getAdminHome = (req, res) => {
+    const user = req.session.user
+
     User.findAll({
         where: {
             userRole: 'RM'
         }
     }).then(responsables => {
         const pageData = {
-            pageTitle: 'Home',
+            pageTitle: user.firstName + ' ' + user.lastName,
             path: '/admin',
-            responsables: responsables
+            responsables: responsables,
+            user: user
         }
     
         res.render('admin/home', pageData)
@@ -21,19 +26,25 @@ exports.getAdminHome = (req, res) => {
 exports.postAdminHome = (req, res) => {
     const responsableId = req.body.responsableId
 
-    User.deleteByUid(responsableId)
-        .then(() => {
-            res.redirect('/admin')
-        })
-        .catch(err => {
-            console.log(err)
-        })
+    User.destroy({
+        where: {
+            uid: responsableId
+        }
+    }).then(() => {
+        res.redirect('/admin')
+    })
+    .catch(err => {
+        console.log(err)
+    })
 }
 
 exports.getAddResponsable = (req, res) => {
+    const user = req.session.user
+
     const pageData = {
         pageTitle: 'Ajouter un responsable',
-        path: '/admin/add-responsable'
+        path: '/admin/add-responsable',
+        user: user
     }
 
     res.render('admin/add-responsable', pageData)

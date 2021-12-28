@@ -2,10 +2,18 @@ const User = require("../models/user")
 
 exports.getAuthPage = (req, res) => {
     const pageData = {
-        pageTitle: 'Connexion'
+        pageTitle: 'Connexion',
+        user: null
     }
 
     res.render('auth', pageData)
+}
+
+exports.getDisconnect = (req, res) => {
+    req.session.isLoggedIn = false
+    req.session.user = null
+
+    res.redirect('/')
 }
 
 exports.postAuthPage = (req, res) => {
@@ -19,6 +27,9 @@ exports.postAuthPage = (req, res) => {
         }
     }).then(user => {
         if (user) {
+            req.session.isLoggedIn = true
+            req.session.user = user
+
             if (user.userRole === 'RM') {
                 res.redirect(`/${user.uid}`)
             } else {

@@ -2,6 +2,8 @@ const Anomalie = require("../models/anomalie")
 const Resource = require("../models/resource")
 
 exports.getResponsableHome = (req, res) => {
+    const user = req.session.user
+
     const responsableId = req.params.responsableId
 
     Resource.findAll({
@@ -10,10 +12,11 @@ exports.getResponsableHome = (req, res) => {
         }
     }).then(resources => {
         const pageData = {
-            pageTitle: 'Home',
+            pageTitle: user.firstName + ' ' + user.lastName,
             path: '/responsable', 
             ressources: resources, 
-            responsableId: responsableId
+            responsableId: responsableId,
+            user: user
         }
         
         res.render('responsable/home', pageData)
@@ -23,12 +26,14 @@ exports.getResponsableHome = (req, res) => {
 }
 
 exports.getAddRessource = (req, res) => {
+    const user = req.session.user
     const responsableId = req.params.responsableId
 
     const pageData = {
         pageTitle: 'Ajouter une ressource',
         path: '/responsable/add-ressource',
-        responsableId: responsableId
+        responsableId: responsableId, 
+        user: user
     }
 
     res.render('responsable/add-ressource', pageData)
@@ -83,6 +88,7 @@ exports.postRessourceDelete = (req, res) => {
 exports.postRessourceDetail = (req, res) => {
     //const responsableId = req.params.responsableId
     const rid = req.params.ressourceId
+    const user = req.session.user
 
     Resource.findByPk(rid)
         .then(resource => {
@@ -92,10 +98,11 @@ exports.postRessourceDetail = (req, res) => {
                 }
             }).then(anomalies => {
                 const pageData = {
-                    pageTitle: resource.resName,
+                    pageTitle: resource.resourceName,
                     path: `/responsable/ressource-detail`,
                     ressource: resource,
-                    anomalies: anomalies
+                    anomalies: anomalies,
+                    user: user
                 }
     
                 res.render('responsable/ressource-detail', pageData)

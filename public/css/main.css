@@ -233,3 +233,29 @@ form {
     display: none;
   }
 }
+
+.user-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.btn-disconnect {
+  display: inline-block;
+  padding: 0.25rem 1rem;
+  text-decoration: none;
+  font: inherit;
+  color: white;
+  background: #00695c;
+  border-radius: 3px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-disconnect:hover,
+.btn-disconnect:active {
+  background-color: white;
+  color: #00695c;
+}

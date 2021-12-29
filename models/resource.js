@@ -2,6 +2,7 @@ const DataTypes = require('sequelize')
 
 const sequelize = require('../util/database')
 
+// Resource Model
 const Resource = sequelize.define(
     'resource',
     {

@@ -2,6 +2,7 @@ const DataTypes = require('sequelize')
 
 const sequelize = require('../util/database')
 
+// User Model
 const User = sequelize.define(
     'user',
     {

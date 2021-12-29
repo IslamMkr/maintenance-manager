@@ -1,6 +1,7 @@
 <%- include('../includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/list.css">
+    <link rel="stylesheet" href="/css/forms.css">
     <link rel="stylesheet" href="/css/main.css">
+    <link rel="stylesheet" href="/css/list.css">
     </head>
 
     <body>
@@ -12,12 +13,20 @@
                     <h1><%= ressource.resourceName %></h1>
                     <p>Localisation : <b><%= ressource.localisation %></b></p>
                 </div>
-                <form action="/<%= user.uid %>/ressources/<%= ressource.rid %>/qrcode" method="GET">
-                    <button class="btn" type="submit">
-                        Générer un code QR
-                    </button>
-                </form>
             </div>
+
+            <hr>
+
+            <form action="/ressources/<%= ressource.rid %>/add-anomalie" method="POST">
+                <h1>Rapporter un problème</h1>
+
+                <div class="form-control">
+                    <label for="desc">Description de l'anomalie</label>
+                    <textarea name="description" id="description" cols="30" rows="10"></textarea>
+                </div>
+
+                <button class="btn" type="submit">Rapporter</button>
+            </form>
 
             <hr>
 
@@ -28,17 +37,12 @@
                     <% for (let anomalie of anomalies) { %>
                         <article class="card">
                             <div class="info-item">
-                                <label for="description" class="label-item">Anomalie</label>
+                                <label for="description" class="label-item">Description du problème</label>
                                 <label for="placeholder-description" class="info-placeholder"><%= anomalie.description %></label>
                             </div>
                             <div class="info-item">
-                                <% if (anomalie.anomalieStatus === 'N') { %>
-                                    <form action="/<%= user.uid %>/ressources/<%= ressource.rid %>/anomalies/<%= anomalie.aid %>" method="GET">
-                                        <button class="btn" type="submit">Fixer</button>
-                                    </form>
-                                <% } else { %>
-                                    <label for="placeholder-statut" class="info-placeholder">Fixée</label>
-                                <% } %>
+                                <label for="statut" class="label-item">Statut</label>
+                                <label for="placeholder-statut" class="info-placeholder"><%= anomalie.anomalieStatus === 'F' ? 'Fixée' : 'Non-Fixée' %></label>
                             </div>
                         </article>
                     <% } %>

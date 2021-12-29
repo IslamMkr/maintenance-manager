@@ -2,6 +2,7 @@ const DataTypes = require('sequelize')
 
 const sequelize = require('../util/database')
 
+// Anomalie Model
 const Anomalie = sequelize.define(
     'anomalie',
     {

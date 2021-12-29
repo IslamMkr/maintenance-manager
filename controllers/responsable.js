@@ -1,5 +1,6 @@
 const Anomalie = require("../models/anomalie")
 const Resource = require("../models/resource")
+const QRCode = require('../util/qrcode')
 
 exports.getResponsableHome = (req, res) => {
     const user = req.session.user
@@ -92,6 +93,7 @@ exports.postRessourceDetail = (req, res) => {
 
     Resource.findByPk(rid)
         .then(resource => {
+            req.session.resource = resource
             Anomalie.findAll({
                 where: {
                     rid: rid
@@ -112,4 +114,44 @@ exports.postRessourceDetail = (req, res) => {
         }).catch(err => {
             console.log(err)
         })
+}
+
+exports.getGenerateQRCode = (req, res) => {
+    const resource = req.session.resource
+
+    const resourceURL = `localhost:3000/ressources/${resource.rid}`
+
+    QRCode(resourceURL)
+        .then(qrcode => {
+            const pageData = {
+                pageTitle: resource.resourceName + ' - QRCode',
+                user: req.session.user,
+                qrcode: qrcode, 
+                url: resourceURL,
+                resource: resource
+            }
+
+            res.render('responsable/qrcode', pageData)
+        }).catch(err => {
+            console.log(err)
+        })
+}
+
+exports.getFixAnomalie = (req, res) => {
+    const aid = req.params.anomalieId
+    const user = req.session.user
+    const resource = req.session.resource
+
+    Anomalie.update(
+        { anomalieStatus: 'F' }, 
+        {
+            where: {
+                aid: aid
+            }
+        }
+    ).then(() => {
+        res.redirect(`/${user.uid}`)
+    }).catch(err => {
+        console.log(err)
+    }) 
 }

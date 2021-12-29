@@ -18,7 +18,7 @@ header {
 }
 
 main {
-  padding: 1rem 30%;
+  padding: 1rem 15%;
 }
 
 form {
@@ -289,4 +289,22 @@ form {
 .qrcode p {
   margin-bottom: 5px;
   font-size: 0.8em;
+}
+
+@media only screen and (max-width: 1200px) {
+  /* For tablets: */
+
+  main {
+    padding: 0% 0%;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+
+  .qrcode {
+    width: 80mm;
+    height: 30mm;
+    border: none;
+  }
+
 }

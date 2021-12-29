@@ -4,8 +4,6 @@ const Anomalie = require("../models/anomalie")
 exports.getRapportPage = (req, res) => {
     const rid = req.params.resourceId
     
-    console.log('-------------------', rid)
-    
     Resource.findByPk(rid)
         .then(resource => {
             req.session.resource = resource
@@ -15,7 +13,6 @@ exports.getRapportPage = (req, res) => {
                     rid: rid
                 }
             }).then(anomalies => {
-                console.log('-------------------', resource)
                 const pageData = {
                     pageTitle: resource.resourceName,
                     ressource: resource,
